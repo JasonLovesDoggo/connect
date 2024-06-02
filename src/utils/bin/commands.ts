@@ -2,13 +2,13 @@
 
 import * as bin from './index';
 import config from '../../../config.json';
-import { getProjects, getQuote, getReadme, getWeather } from '../api';
+import { getProjects, getQuote, getWeather } from '../api';
 import _SumFetch from './sumfetch';
 import banners from '../../../banners';
 
 export const sumfetch = async (args: string[]): Promise<string> => {
   return await _SumFetch(args);
-}
+};
 
 // Help
 export const help = async (args: string[]): Promise<string> => {
@@ -60,13 +60,6 @@ export const quote = async (args: string[]): Promise<string> => {
   const data = await getQuote();
   return data.quote;
 };
-
-export const readme = async (args: string[]): Promise<string> => {
-  const readme = await getReadme();
-  return `Opening GitHub README...\n
-  ${readme}`;
-};
-
 export const weather = async (args: string[]): Promise<string> => {
   const city = args.join('+');
   if (!city) {
@@ -88,7 +81,8 @@ Welcome to my website!
 More about me:
 'sumfetch' - short summary.
 'resume' - my latest resume.
-'readme' - my github readme.`;
+'github' - my Github profile.
+'linkedin' - my LinkedIn profile.`;
 };
 
 export const resume = async (args: string[]): Promise<string> => {
