@@ -10,6 +10,7 @@
   "email": "contact@jasoncameron.dev",
   "ps1_hostname": "jsoncloud",
   "ps1_username": "guest",
+  "portfolio_url": "https://jasoncameron.dev",
   "repo": "https://github.com/JasonLovesDoggo/connect",
   "resume_url": "https://github.com/JasonLovesDoggo/JasonLovesDoggo.github.io/raw/main/src/Assets/resume.pdf",
   "donate_urls": {
@@ -17,13 +18,13 @@
   },
   "colors": {
     "light": {
-      "background": "#FBF1C9",
-      "foreground": "#3C3836",
-      "yellow": "#D79921",
-      "green": "#98971A",
-      "gray": "#7C6F64",
-      "blue": "#458588",
-      "red": "#CA2124"
+      "background": "#E5E9F0",
+      "foreground": "#2E3440",
+      "yellow": "#5E81AC",
+      "green": "#A3BE8C",
+      "gray": "#88C0D0",
+      "blue": "#EBCB8B",
+      "red": "#BF616A"
     },
     "dark": {
       "background": "#2E3440",

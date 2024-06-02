@@ -2,16 +2,17 @@
 
 import * as bin from './index';
 import config from '../../../config.json';
+import { getProjects, getQuote, getReadme, getWeather } from '../api';
 
 // Help
 export const help = async (args: string[]): Promise<string> => {
-  const commands = Object.keys(bin).sort().join(', ');
-  var c = '';
-  for (let i = 1; i <= Object.keys(bin).sort().length; i++) {
+  const commands = Object.keys(bin).sort();
+  let c = '';
+  for (let i = 1; i <= commands.length; i++) {
     if (i % 7 === 0) {
-      c += Object.keys(bin).sort()[i - 1] + '\n';
+      c += commands[i - 1] + '\n';
     } else {
-      c += Object.keys(bin).sort()[i - 1] + ' ';
+      c += commands[i - 1] + ' ';
     }
   }
   return `Welcome! Here are all the available commands:
@@ -20,6 +21,52 @@ export const help = async (args: string[]): Promise<string> => {
 [ctrl+l]/clear: clear terminal.\n
 Type 'sumfetch' to display summary.
 `;
+};
+
+// API commands
+
+export const projects = async (args: string[]): Promise<string> => {
+  const projects = await getProjects();
+
+  const projectsHtml = projects
+    .map(
+      (repo: any) => `
+    <li style="flex: 1;" key="${repo.id}">
+      ${repo.language ? `[${repo.language}]` : ''} ${repo.name} - ${
+        repo.description || ''
+      }
+      <a
+        class="text-light-blue dark:text-dark-blue underline" 
+        href="${repo.html_url}"
+        target="_blank"
+        rel="noreferrer"
+      >
+        ${repo.html_url}
+      </a>
+    </li>
+  `,
+    )
+    .join('');
+  return `<ul style="display: flex; flex-direction: column">${projectsHtml}</ul>`;
+};
+
+export const quote = async (args: string[]): Promise<string> => {
+  const data = await getQuote();
+  return data.quote;
+};
+
+export const readme = async (args: string[]): Promise<string> => {
+  const readme = await getReadme();
+  return `Opening GitHub README...\n
+  ${readme}`;
+};
+
+export const weather = async (args: string[]): Promise<string> => {
+  const city = args.join('+');
+  if (!city) {
+    return 'Usage: weather [city]. Example: weather toronto';
+  }
+  return await getWeather(city);
 };
 
 // Redirection
@@ -69,6 +116,11 @@ export const linkedin = async (args: string[]): Promise<string> => {
   return `Opening linkedin.com/in/${config.social.linkedin}...`;
 };
 
+export const portfolio = async (args: string[]): Promise<string> => {
+  window.open(`${config.portfolio_url}`);
+  return `Opening ${config.portfolio_url.replace('https://', '')}...`;
+};
+export const website = portfolio; // Alias
 // Search
 export const google = async (args: string[]): Promise<string> => {
   window.open(`https://google.com/search?q=${args.join(' ')}`);
@@ -147,7 +199,6 @@ export const nano = async (args?: string[]): Promise<string> => {
 export const code = async (args?: string[]): Promise<string> => {
   return `Despite the fact that I am a terminal, I cannot open vscode.`;
 };
-
 
 export const sudo = async (args?: string[]): Promise<string> => {
   window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank'); // ...I'm sorry

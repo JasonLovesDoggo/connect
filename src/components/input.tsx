@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { commandExists } from '../utils/commandExists';
 import { shell } from '../utils/shell';
 import { handleTabCompletion } from '../utils/tabCompletion';
 import { Ps1 } from './Ps1';
+import * as bin from '../utils/bin/commands';
+import fuzzysort from 'fuzzysort';
 
 export const Input = ({
   inputRef,
@@ -78,30 +80,76 @@ export const Input = ({
     setCommand(value);
   };
 
+  const prepared = useMemo(() => Object.keys(bin).map(fuzzysort.prepare), []);
+
+  const likelyCommandResult = useMemo(() => {
+    const result = fuzzysort.go(command, prepared, {
+      limit: 1,
+      threshold: -Infinity, // Match even with low similarity
+    });
+    return result[0] || null; // Return the result object or null if no match
+  }, [command, prepared]);
+
+  const renderCommand = () => {
+    if (!likelyCommandResult) {
+      return (
+        <span className="text-dark-red">{command}</span> // No match, show command in red
+      );
+    }
+
+    const { target, indexes } = likelyCommandResult;
+    let parts = [];
+    let lastIndex = 0;
+    for (const index of indexes) {
+      parts.push(
+        <span key={lastIndex} className="text-dark-green">
+          {target.slice(lastIndex, index)}
+        </span>
+      ); // Matched part in green
+      parts.push(
+        <span key={index} className="text-gray-400">
+          {target[index]}
+        </span>
+      ); // Extrapolated part in gray
+      lastIndex = index + 1;
+    }
+    parts.push(
+      <span key={lastIndex} className="text-dark-green">
+        {target.slice(lastIndex)}
+      </span>
+    ); // Remaining matched part in green
+
+    return parts;
+  };
+
   return (
     <div className="flex flex-row space-x-2">
       <label htmlFor="prompt" className="flex-shrink">
-        <Ps1 />
+        {/* Your Ps1 component */}
       </label>
 
-      <input
-        ref={inputRef}
-        id="prompt"
-        type="text"
-        className={`bg-light-background dark:bg-dark-background focus:outline-none flex-grow ${
-          commandExists(command) || command === ''
-            ? 'text-dark-green'
-            : 'text-dark-red'
-        }`}
-        value={command}
-        onChange={onChange}
-        autoFocus
-        onKeyDown={onSubmit}
-        autoComplete="off"
-        spellCheck="false"
-      />
+      <div className="relative flex-grow">
+        <input
+          ref={inputRef}
+          id="prompt"
+          type="text"
+          className="bg-light-background dark:bg-dark-background focus:outline-none text-dark-green w-full"
+          value={command}
+          onChange={onChange}
+          autoFocus
+          onKeyDown={onSubmit}
+          autoComplete="off"
+          spellCheck="false"
+        />
+        <div
+          className="absolute top-0 left-0 pointer-events-none"
+          style={{ width: `${inputRef.current?.offsetWidth || 0}px` }}
+        >
+          {renderCommand()}
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default Input;
