@@ -3,6 +3,12 @@
 import * as bin from './index';
 import config from '../../../config.json';
 import { getProjects, getQuote, getReadme, getWeather } from '../api';
+import _SumFetch from './sumfetch';
+import banners from '../../../banners';
+
+export const sumfetch = async (args: string[]): Promise<string> => {
+  return await _SumFetch(args);
+}
 
 // Help
 export const help = async (args: string[]): Promise<string> => {
@@ -208,14 +214,8 @@ export const sudo = async (args?: string[]): Promise<string> => {
 // Banner
 export const banner = (args?: string[]): string => {
   return `
-█████        ███                       ███████████                                   
-░░███        ░░░                       ░█░░░███░░░█                                   
- ░███        ████  █████ █████  ██████ ░   ░███  ░   ██████  ████████  █████████████  
- ░███       ░░███ ░░███ ░░███  ███░░███    ░███     ███░░███░░███░░███░░███░░███░░███ 
- ░███        ░███  ░███  ░███ ░███████     ░███    ░███████  ░███ ░░░  ░███ ░███ ░███ 
- ░███      █ ░███  ░░███ ███  ░███░░░      ░███    ░███░░░   ░███      ░███ ░███ ░███ 
- ███████████ █████  ░░█████   ░░██████     █████   ░░██████  █████     █████░███ █████
-░░░░░░░░░░░ ░░░░░    ░░░░░     ░░░░░░     ░░░░░     ░░░░░░  ░░░░░     ░░░░░ ░░░ ░░░░░ 
+${banners[1]}                                        
+                                                                                                                                                                  
 
 Type 'help' to see the list of available commands.
 Type 'sumfetch' to display summary.
