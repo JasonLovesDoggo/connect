@@ -1,7 +1,5 @@
-import React, { memo, useMemo } from 'react';
-import { commandExists } from '../utils/commandExists';
+import React, { useMemo } from 'react';
 import { shell } from '../utils/shell';
-import { handleTabCompletion } from '../utils/tabCompletion';
 import { Ps1 } from './Ps1';
 import * as bin from '../utils/bin/commands';
 import fuzzysort from 'fuzzysort';
@@ -80,13 +78,28 @@ export const Input = ({
     setCommand(value);
   };
 
-  const prepared = useMemo(() => Object.keys(bin).map(fuzzysort.prepare), []);
+  const handleTabCompletion = (
+    command: string,
+    setCommand: React.Dispatch<React.SetStateAction<string>>,
+  ) => {
+    if (!likelyCommandResult) {
+      return;
+    }
+    setCommand(likelyCommandResult.target);
+  };
 
-  const likelyCommandResult = useMemo(() => {
+  const keys = useMemo(() => Object.keys(bin), []);
+  const prepared = useMemo(() => keys.map(fuzzysort.prepare), []);
+
+  const likelyCommandResult: Fuzzysort.Result = useMemo(() => {
     const result = fuzzysort.go(command, prepared, {
       limit: 1,
-      threshold: -Infinity, // Match even with low similarity
+      threshold: 0,
     });
+    const keyFound: boolean = keys.some((key) => key.startsWith(command));
+    if (!keyFound) {
+      return null;
+    }
     return result[0] || null; // Return the result object or null if no match
   }, [command, prepared]);
 
@@ -102,21 +115,17 @@ export const Input = ({
     let lastIndex = 0;
     for (const index of indexes) {
       parts.push(
-        <span key={lastIndex} className="text-dark-green">
+        <span key={index} className="text-dark-green">
           {target.slice(lastIndex, index)}
-        </span>
+        </span>,
       ); // Matched part in green
-      parts.push(
-        <span key={index} className="text-gray-400">
-          {target[index]}
-        </span>
-      ); // Extrapolated part in gray
+      parts.push(<span key={target[index]} className="text-gray-400">{target[index]}</span>); // Extrapolated part in gray
       lastIndex = index + 1;
     }
     parts.push(
-      <span key={lastIndex} className="text-dark-green">
+      <span key={target.slice(lastIndex)} className="text-dark-green">
         {target.slice(lastIndex)}
-      </span>
+      </span>,
     ); // Remaining matched part in green
 
     return parts;
@@ -125,7 +134,7 @@ export const Input = ({
   return (
     <div className="flex flex-row space-x-2">
       <label htmlFor="prompt" className="flex-shrink">
-        {/* Your Ps1 component */}
+        <Ps1 />
       </label>
 
       <div className="relative flex-grow">
@@ -150,6 +159,6 @@ export const Input = ({
       </div>
     </div>
   );
-}
+};
 
 export default Input;
