@@ -3,13 +3,7 @@
 import * as bin from './index';
 import config from '../../../config.json';
 import { getProjects, getQuote, getWeather } from '../api';
-import _SumFetch from './sumfetch';
 import banners from '../../../banners';
-
-export const sumfetch = async (args: string[]): Promise<string> => {
-  return await _SumFetch(args);
-};
-sumfetch.desc = 'Display general summary of my info.';
 
 // Help
 interface Command {
@@ -24,7 +18,10 @@ export const help = async (args: string[]): Promise<string> => {
     .filter(([, command]) => (command as unknown as Command).hidden !== true)
     .map(([commandName, command]) => {
       const description = (command as any).desc; // Access the description from the 'desc' property
-      return [commandName, { description, fn: command }] as [string, Command];
+      return [commandName, { description, fn: command }] as unknown as [
+        string,
+        Command,
+      ];
     })
     .sort();
 
@@ -185,7 +182,7 @@ export const bing = async (args: string[]): Promise<string> => {
   window.open(`https://bing.com/search?q=${args.join(' ')}`);
   return `Wow, really? You are using bing for ${args.join(' ')}?`;
 };
-duckduckgo.desc =
+bing.desc =
   'Search Bing... (you sure?) for the provided query. Usage: bing [search query].';
 
 export const reddit = async (args: string[]): Promise<string> => {
@@ -262,7 +259,7 @@ nvim.desc = 'Open the nvim text editor.';
 export const emacs = async (args?: string[]): Promise<string> => {
   return `you know what? just use nano.`;
 };
-nvim.desc = 'Open the emacs text editor.';
+emacs.desc = 'Open the emacs text editor.';
 
 export const nano = async (args?: string[]): Promise<string> => {
   return `at this point, just use vscode.`;
@@ -292,3 +289,27 @@ Type 'repo' or click <u><a class="text-light-blue dark:text-dark-blue underline"
 `;
 };
 banner.desc = 'Display the welcome banner.';
+
+export const sumfetch = async (args: string[]): Promise<string> => {
+  return `                                                  
+             @@@@@@@@@@@@@                   sumfetch: summary display
+        @@@@               @@@@             -----------
+      @@                       @@            ABOUT
+    @@                           @@          ${config.name}
+  @@                               @@       ﰩ ${config.ps1_hostname}
+ @@                         @@@     @@       <u><a href="${config.resume_url}" target="_blank">resume</a></u>
+@@        @@@                        @@     爵 <u><a href="${config.repo}" target="_blank">Github repo</a></u>
+@@        @@@                        @@      <u><a href="mailto:${config.email}" target="_blank">${config.email}</a></u>
+@@                                   @@     -----------
+@@             .@@@@@@@@@@.          @@      CONNECT WITH ME 
+ @@           @@          @@        @@       <u><a href="https://instagram.com/${config.social.instagram}" target="_blank">instagram.com/${config.social.instagram}</a></u>
+  @@           @@        @@        @@        <u><a href="https://github.com/${config.social.github}" target="_blank">github.com/${config.social.github}</a></u>
+   @@             @@@@@@          @@         <u><a href="https://linkedin.com/in/${config.social.linkedin}" target="_blank">linkedin.com/in/${config.social.linkedin}</a></u>
+     @@@                        @@@         -----------
+        @@@                  @@@ @@          DONATE 
+         @|  @@@@@@@@@@@@@@@@   @@           <u><a href="${config.donate_urls.github}" target="_blank">${config.donate_urls.github}</a></u>
+         @|                      @@         
+
+`;
+};
+sumfetch.desc = 'Display general summary of my info.';
