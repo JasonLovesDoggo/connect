@@ -1,11 +1,20 @@
 import React from 'react';
 import '../styles/global.css';
 import Head from 'next/head';
-
+import ReactGA from 'react-ga4';
+import config from '../../config.json';
 const App = ({ Component, pageProps }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
+    ReactGA.initialize(config.ga4);
+    // Send pageview with a custom path
+    ReactGA.send({
+      hitType: 'pageview',
+      page: '/',
+      title: 'Home',
+    });
+
     if (localStorage.mobile || window.navigator.maxTouchPoints > 1) {
       alert(
         'This site is not designed for mobile nor touch devices. Please use a desktop device for the best experience. If you wish to view an alternative version of this site, please visit https://jasoncameron.dev.',
