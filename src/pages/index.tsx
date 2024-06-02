@@ -39,7 +39,7 @@ const IndexPage: React.FC<IndexPageProps> = ({ inputRef }) => {
   React.useEffect(() => {
     (async () => {
       const params = new URLSearchParams(window.location.search);
-      if (params.has('network')) {
+      if (params.has('network') || params.has('n')) {
         setLastCommandIndex(0);
         await shell('sumfetch', setHistory, clearHistory, setCommand);
         containerRef.current.scrollTo(0, containerRef.current.scrollHeight);
