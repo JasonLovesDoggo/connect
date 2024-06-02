@@ -232,7 +232,7 @@ if you want to help, you can type 'donate'.`;
 cd.desc = 'Change directory. Usage: cd [directory].';
 
 export const pwd = async (args: string[]): Promise<string> => {
-  return '/home/guest';
+  return '/home/guest/';
 };
 pwd.desc = 'Print the current working directory.';
 
