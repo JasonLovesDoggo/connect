@@ -197,7 +197,7 @@ export const nano = async (args?: string[]): Promise<string> => {
 };
 
 export const code = async (args?: string[]): Promise<string> => {
-  return `Despite the fact that I am a terminal, I cannot open vscode.`;
+  return `Never gonna give you up, never gonna let you down...`;
 };
 
 export const sudo = async (args?: string[]): Promise<string> => {
