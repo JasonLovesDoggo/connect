@@ -105,9 +105,7 @@ export const Input = ({
 
   const renderCommand = () => {
     if (!likelyCommandResult) {
-      return (
-        <span className="text-dark-red">{command}</span> // No match, show command in red
-      );
+      return; // exit early if no match
     }
 
     const { target, indexes } = likelyCommandResult;
@@ -119,7 +117,11 @@ export const Input = ({
           {target.slice(lastIndex, index)}
         </span>,
       ); // Matched part in green
-      parts.push(<span key={target[index]} className="text-gray-400">{target[index]}</span>); // Extrapolated part in gray
+      parts.push(
+        <span key={target[index]} className="text-gray-400">
+          {target[index]}
+        </span>,
+      ); // Extrapolated part in gray
       lastIndex = index + 1;
     }
     parts.push(
@@ -142,7 +144,10 @@ export const Input = ({
           ref={inputRef}
           id="prompt"
           type="text"
-          className="bg-light-background dark:bg-dark-background focus:outline-none text-dark-green w-full"
+          className={`bg-light-background dark:bg-dark-background focus:outline-none w-full ${
+            likelyCommandResult ? 'text-dark-green' : 'text-dark-red'
+          }`}
+          style={{ caretColor: '#338bbe' }}
           value={command}
           onChange={onChange}
           autoFocus
