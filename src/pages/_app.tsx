@@ -4,6 +4,26 @@ import Head from 'next/head';
 
 const App = ({ Component, pageProps }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const [width, setWidth] = React.useState<number>(2000);
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange);
+
+    if (width <= 768) {
+      alert(
+        'This site is not designed for mobile devices. Please use a desktop device for the best experience. If you wish to view an alternative version of this site, please visit https://jasoncameron.dev.',
+      );
+      // window.open('https://jasoncameron.dev', '_blank');
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange);
+    };
+  }, []);
 
   const OnFocusAction = () => {
     inputRef.current.focus({ preventScroll: true });
