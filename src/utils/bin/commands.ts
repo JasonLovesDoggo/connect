@@ -11,18 +11,31 @@ export const sumfetch = async (args: string[]): Promise<string> => {
 };
 
 // Help
+interface Command {
+  description: string; // Add a description property to the command interface
+  fn: (args: string[]) => Promise<string>;
+}
+
 export const help = async (args: string[]): Promise<string> => {
-  const commands = Object.keys(bin).sort();
-  let c = '';
-  for (let i = 1; i <= commands.length; i++) {
-    if (i % 7 === 0) {
-      c += commands[i - 1] + '\n';
-    } else {
-      c += commands[i - 1] + ' ';
-    }
-  }
-  return `Welcome! Here are all the available commands:
-\n${c}\n
+  const commandsWithDescriptions = Object.entries(bin)
+    .map(([commandName, command]) => {
+      const description = (command as any).desc; // Access the description from the 'desc' property
+      return [commandName, { description, fn: command }] as [string, Command];
+    })
+    .sort();
+
+  const maxCommandLength = Math.max(
+    ...commandsWithDescriptions.map(([command]) => command.length),
+  );
+
+  const formattedCommands = commandsWithDescriptions
+    .map(([command, { description }]) => {
+      const padding = ' '.repeat(maxCommandLength - command.length + 4); // Calculate padding for alignment
+      return `${command}${padding}${description}`;
+    })
+    .join('\n'); // Combine commands and descriptions with a newline
+
+  return `Welcome! Here are all the available commands:\n\n${formattedCommands}\n\n
 [tab]: trigger completion.
 [ctrl+l]/clear: clear terminal.\n
 Type 'sumfetch' to display summary.
@@ -73,6 +86,7 @@ export const repo = async (args: string[]): Promise<string> => {
   window.open(`${config.repo}`);
   return 'Opening Github repository...';
 };
+repo.desc = 'Open the GitHub repository in your browser.';
 
 // About
 export const about = async (args: string[]): Promise<string> => {
