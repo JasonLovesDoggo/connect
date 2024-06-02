@@ -5,6 +5,7 @@ import { Input } from '../components/input';
 import { useHistory } from '../components/history/hook';
 import { History } from '../components/history/History';
 import { banner } from '../utils/bin';
+import { shell } from '../utils/shell';
 
 interface IndexPageProps {
   inputRef: React.MutableRefObject<HTMLInputElement>;
@@ -34,6 +35,17 @@ const IndexPage: React.FC<IndexPageProps> = ({ inputRef }) => {
       inputRef.current.focus({ preventScroll: true });
     }
   }, [history]);
+
+  React.useEffect(() => {
+    (async () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('network')) {
+        setLastCommandIndex(0);
+        await shell('sumfetch', setHistory, clearHistory, setCommand);
+        containerRef.current.scrollTo(0, containerRef.current.scrollHeight);
+      }
+    })();
+  }, []);
 
   return (
     <>
