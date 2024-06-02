@@ -1,20 +1,19 @@
 {
-  "readmeUrl": "https://raw.githubusercontent.com/cveinnt/cveinnt/master/README.md",
-  "title": "LiveTerm",
-  "name": "John Doe",
-  "ascii": "liveterm",
+  "readmeUrl": "https://raw.githubusercontent.com/JasonLovesDoggo/JasonLovesDoggo/main/README.md",
+  "title": "Connect with me!",
+  "name": "Jason Cameron",
+  "ascii": "CHANGE ME",
   "social": {
-    "github": "github",
-    "linkedin": "linkedin"
+    "github": "JasonLovesDoggo",
+    "linkedin": "jsoncameron"
   },
-  "email": "contact@email.com",
-  "ps1_hostname": "liveterm",
-  "ps1_username": "visitor",
-  "repo": "https://github.com/Cveinnt/LiveTerm",
-  "resume_url": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Resume.pdf",
+  "email": "contact@jasoncameron.dev",
+  "ps1_hostname": "jsoncloud",
+  "ps1_username": "guest",
+  "repo": "https://github.com/JasonLovesDoggo/connect",
+  "resume_url": "https://github.com/JasonLovesDoggo/JasonLovesDoggo.github.io/raw/main/src/Assets/resume.pdf",
   "donate_urls": {
-    "paypal": "https://paypal.me/cveinnt",
-    "patreon": "https://patreon.com/cveinnt"
+    "github": "https://github.com/sponsors/JasonLovesDoggo"
   },
   "colors": {
     "light": {

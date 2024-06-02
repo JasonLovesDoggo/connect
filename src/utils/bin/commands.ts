@@ -47,8 +47,7 @@ export const resume = async (args: string[]): Promise<string> => {
 export const donate = async (args: string[]): Promise<string> => {
   return `thank you for your interest. 
 here are the ways you can support my work:
-- <u><a class="text-light-blue dark:text-dark-blue underline" href="${config.donate_urls.paypal}" target="_blank">paypal</a></u>
-- <u><a class="text-light-blue dark:text-dark-blue underline" href="${config.donate_urls.patreon}" target="_blank">patreon</a></u>
+- <u><a class="text-light-blue dark:text-dark-blue underline" href="${config.donate_urls.github}" target="_blank">GitHub Sponsors</a></u>
 `;
 };
 
@@ -67,7 +66,7 @@ export const github = async (args: string[]): Promise<string> => {
 export const linkedin = async (args: string[]): Promise<string> => {
   window.open(`https://www.linkedin.com/in/${config.social.linkedin}/`);
 
-  return 'Opening linkedin...';
+  return `Opening linkedin.com/in/${config.social.linkedin}...`;
 };
 
 // Search
@@ -93,7 +92,15 @@ export const reddit = async (args: string[]): Promise<string> => {
 
 // Typical linux commands
 export const echo = async (args: string[]): Promise<string> => {
-  return args.join(' ');
+  const string = args.join(' ');
+  const regex =
+    /<(?:(script|style|object|embed|applet|noframes|noscript|noembed)(?:\s+(?:"[\S\s]*?"|'[\S\s]*?'|(?:(?!\/>)[^>])?)+)?\s*>[\S\s]*?<\/\1\s*(?=>)|(?:\/?[\w:]+\s*\/?)|(?:[\w:]+\s+(?:"[\S\s]*?"|'[\S\s]*?'|[^>]?)+\s*\/?)|\?[\S\s]*?\?|(?:!(?:(?:DOCTYPE[\S\s]*?)|(?:\[CDATA\[[\S\s]*?\]\])|(?:--[\S\s]*?--)|(?:ATTLIST[\S\s]*?)|(?:ENTITY[\S\s]*?)|(?:ELEMENT[\S\s]*?))))>/g;
+
+  if (regex.test(string)) {
+    return 'nice try lmao';
+  }
+
+  return string.replace(regex, '');
 };
 
 export const whoami = async (args: string[]): Promise<string> => {
@@ -130,8 +137,17 @@ export const nvim = async (args: string[]): Promise<string> => {
 };
 
 export const emacs = async (args?: string[]): Promise<string> => {
-  return `you know what? just use vscode.`;
+  return `you know what? just use nano.`;
 };
+
+export const nano = async (args?: string[]): Promise<string> => {
+  return `at this point, just use vscode.`;
+};
+
+export const code = async (args?: string[]): Promise<string> => {
+  return `Despite the fact that I am a terminal, I cannot open vscode.`;
+};
+
 
 export const sudo = async (args?: string[]): Promise<string> => {
   window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank'); // ...I'm sorry
