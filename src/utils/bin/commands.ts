@@ -77,10 +77,12 @@ export const repo = async (args: string[]): Promise<string> => {
 // About
 export const about = async (args: string[]): Promise<string> => {
   return `Hi, I am ${config.name}. 
-Welcome to my website!
+Welcome to my little terminal!
 More about me:
 'sumfetch' - short summary.
 'resume' - my latest resume.
+'donate' - ways to support my work.
+'portfolio' - my full portfolio site.
 'github' - my Github profile.
 'linkedin' - my LinkedIn profile.`;
 };
@@ -123,27 +125,42 @@ export const portfolio = async (args: string[]): Promise<string> => {
 export const website = portfolio; // Alias
 // Search
 export const google = async (args: string[]): Promise<string> => {
+  if (!args.length) {
+    return 'Usage: google [search query]. Example: google how to create a website';
+  }
   window.open(`https://google.com/search?q=${args.join(' ')}`);
   return `Searching google for ${args.join(' ')}...`;
 };
 
 export const duckduckgo = async (args: string[]): Promise<string> => {
+  if (!args.length) {
+    return 'Usage: duckduckgo [search query]. Example: duckduckgo how to create a website';
+  }
   window.open(`https://duckduckgo.com/?q=${args.join(' ')}`);
   return `Searching duckduckgo for ${args.join(' ')}...`;
 };
 
 export const bing = async (args: string[]): Promise<string> => {
+  if (!args.length) {
+    return 'Usage: bing [search query]. Example: bing how to create a website';
+  }
   window.open(`https://bing.com/search?q=${args.join(' ')}`);
   return `Wow, really? You are using bing for ${args.join(' ')}?`;
 };
 
 export const reddit = async (args: string[]): Promise<string> => {
+  if (!args.length) {
+    return 'Usage: reddit [search query]. Example: reddit how to create a website';
+  }
   window.open(`https://www.reddit.com/search/?q=${args.join(' ')}`);
   return `Searching reddit for ${args.join(' ')}...`;
 };
 
 // Typical linux commands
 export const echo = async (args: string[]): Promise<string> => {
+  if (!args.length) {
+    return 'Usage: echo [string]. Example: echo hello world';
+  }
   const string = args.join(' ');
   const regex =
     /<(?:(script|style|object|embed|applet|noframes|noscript|noembed)(?:\s+(?:"[\S\s]*?"|'[\S\s]*?'|(?:(?!\/>)[^>])?)+)?\s*>[\S\s]*?<\/\1\s*(?=>)|(?:\/?[\w:]+\s*\/?)|(?:[\w:]+\s+(?:"[\S\s]*?"|'[\S\s]*?'|[^>]?)+\s*\/?)|\?[\S\s]*?\?|(?:!(?:(?:DOCTYPE[\S\s]*?)|(?:\[CDATA\[[\S\s]*?\]\])|(?:--[\S\s]*?--)|(?:ATTLIST[\S\s]*?)|(?:ENTITY[\S\s]*?)|(?:ELEMENT[\S\s]*?))))>/g;
@@ -156,15 +173,14 @@ export const echo = async (args: string[]): Promise<string> => {
 };
 
 export const whoami = async (args: string[]): Promise<string> => {
-  return `${config.ps1_username}`;
+  return `${config.ps1_username}`; // todo add SU cmd
 };
 
 export const ls = async (args: string[]): Promise<string> => {
-  return `a
-bunch
-of
-fake
-directories`;
+  return `.env
+ Dockerfile
+ secrets.txt
+ diary/`;
 };
 
 export const cd = async (args: string[]): Promise<string> => {
