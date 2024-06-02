@@ -279,8 +279,7 @@ sudo.desc = 'Execute a command as the superuser.';
 
 // Banner
 export const banner = (args?: string[]): string => {
-  return `
-${banners[0]}                                        
+  return `<p style='min-width: max-content;'>${banners[0]}</p>
                                                                                                                                                                   
 
 Type 'help' to see the list of available commands.
