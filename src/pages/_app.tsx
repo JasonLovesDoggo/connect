@@ -5,12 +5,8 @@ import Head from 'next/head';
 const App = ({ Component, pageProps }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  const onClickAnywhere = () => {
+  const OnFocusAction = () => {
     inputRef.current.focus({ preventScroll: true });
-  };
-
-  const keyPress = () => {
-    inputRef.current.focus();
   };
 
   return (
@@ -26,8 +22,8 @@ const App = ({ Component, pageProps }) => {
 
       <div
         className="text-light-foreground dark:text-dark-foreground min-w-max text-xs md:min-w-full md:text-base"
-        onClick={onClickAnywhere}
-        onKeyDown={onClickAnywhere}
+        onClick={OnFocusAction}
+        onKeyDown={OnFocusAction}
         // tabIndex={0}
       >
         <main className="bg-light-background dark:bg-dark-background w-full h-full p-2">

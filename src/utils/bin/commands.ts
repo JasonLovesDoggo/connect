@@ -214,7 +214,7 @@ export const sudo = async (args?: string[]): Promise<string> => {
 // Banner
 export const banner = (args?: string[]): string => {
   return `
-${banners[1]}                                        
+${banners[0]}                                        
                                                                                                                                                                   
 
 Type 'help' to see the list of available commands.

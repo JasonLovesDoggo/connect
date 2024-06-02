@@ -5,8 +5,13 @@
 @font-face {
   font-family: 'Hack';
   src: url(/assets/fonts/Hack-NF.ttf);
-  display: swap;
 }
+
+::selection {
+  background-color: #314986;
+  color: white
+}
+
 
 * {
   font-family: 'Hack', monospace;
