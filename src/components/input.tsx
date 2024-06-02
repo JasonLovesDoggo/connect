@@ -92,6 +92,7 @@ export const Input = ({
   const prepared = useMemo(() => keys.map(fuzzysort.prepare), []);
 
   const likelyCommandResult: Fuzzysort.Result = useMemo(() => {
+    // todo switch to a simple string match (prefix match)
     const result = fuzzysort.go(command, prepared, {
       limit: 1,
       threshold: 0,
