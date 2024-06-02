@@ -279,10 +279,12 @@ sudo.desc = 'Execute a command as the superuser.';
 
 // Banner
 export const banner = (args?: string[]): string => {
-  return `<p style='min-width: max-content;'>${banners[0]}</p>
+  return `
+<p style='min-width: max-content;'>${banners[2]}</p>
                                                                                                                                                                   
+Welcome to <span class="text-light-green">fish</span>, the friendly interactive shell
+Type help for instructions on how to use fish 
 
-Type 'help' to see the list of available commands.
 Type 'sumfetch' to display summary.
 Type 'repo' or click <u><a class="text-light-blue dark:text-dark-blue underline" href="${config.repo}" target="_blank">here</a></u> for the Github repository.
 `;
