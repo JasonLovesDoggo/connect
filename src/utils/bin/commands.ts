@@ -282,11 +282,11 @@ export const banner = (args?: string[]): string => {
   return `
 <p style='min-width: max-content;'>${banners[2]}</p>
                                                                                                                                                                   
-Welcome to <span class="text-light-green">fish</span>, the friendly interactive shell
-Type 'help' for instructions on how to use fish 
+Welcome to fish, the friendly interactive shell
+Type <span class="text-light-green">'help'</span> for instructions on how to use fish 
 
-Type 'sumfetch' to display summary.
-Type 'repo' or click <u><a class="text-light-blue dark:text-dark-blue underline" href="${config.repo}" target="_blank">here</a></u> for the Github repository.
+Type <span class="text-light-yellow">sumfetch</span> to display summary.
+Type <span class="text-light-yellow">repo</span> or click <u><a class="text-light-blue dark:text-dark-blue underline" href="${config.repo}" target="_blank">here</a></u> for the Github repository.
 `;
 };
 banner.desc = 'Display the welcome banner.';
