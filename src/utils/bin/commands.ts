@@ -225,6 +225,42 @@ export const ls = async (args: string[]): Promise<string> => {
 };
 ls.desc = 'List files and directories.';
 
+export const cat = async (args: string[]): Promise<string> => {
+  const cats = [
+    `
+    /\\_____/\\
+   /  o   o  \\
+  ( ==  ^  == )
+   )         (
+  (           )
+ ( (  )   (  ) )
+(__(__)___(__)__)
+
+meow!`,
+    `
+ _._     _,-'""\`-._
+(,-.\`._,'(       |\`-/|
+    \`-.-' \\ )-\`( , o o)
+          \`-    \\\`_\`"'-`,
+    `
+  /\\_/\\
+ ( o.o )
+  > ^ <`,
+    `
+    |\\__/,|   (\`\\
+  _.|o o  |_   ) )
+-(((---(((--------`,
+    `
+ /\\_/\\
+( o o )
+ > ^ <
+ / 0 \\
+(_)-(_)`,
+  ];
+  return cats[Math.floor(Math.random() * cats.length)];
+};
+cat.desc = 'Concatenate and display file contents... or maybe just a cat.';
+
 export const cd = async (args: string[]): Promise<string> => {
   return `unfortunately, i cannot afford more directories.
 if you want to help, you can type 'donate'.`;
